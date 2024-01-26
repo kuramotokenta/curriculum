@@ -7,7 +7,18 @@
             <h4>プロフィール編集</h4></a>
         </div>
         <div class="">
-            <form action="{{ route('edit.post', ['id' => $result['id']])}}" method="post" enctype="multipart/form-data">
+            <div class="panel-body">
+                @if($errors->any())
+                <div class="alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $message)
+                        <li>{{$message}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+            </div>
+            <form action="{{ route('edit.post', ['id'=>$result['id']])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <label for='title'>タイトルを変更する</label>
                     <input type='text' class='form-control' name='title' value='<?php echo $result['title'] ?>'/>

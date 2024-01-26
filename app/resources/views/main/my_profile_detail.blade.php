@@ -7,6 +7,17 @@
             <h4>プロフィール編集</h4></a>
         </div>
         <div class="">
+            <div class="panel-body">
+                @if($errors->any())
+                <div class="alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $message)
+                        <li>{{$message}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+            </div>
             <form action="{{ route('profile.detail')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <label for='name'>名前を変更する</label>

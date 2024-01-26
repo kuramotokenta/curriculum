@@ -15,6 +15,7 @@ use App\Like;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateProfile;
 
 class ProfileController extends Controller
 {
@@ -39,7 +40,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function profileDetail(Request $request)
+    public function profileDetail(CreateProfile $request)
     {
         $user = Auth::user();
 

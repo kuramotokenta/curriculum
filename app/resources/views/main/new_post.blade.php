@@ -8,6 +8,17 @@
                     <h4 class='text-center'>新規登録</h1>
                 </div>
                     <div class="card-body">
+                        <div class="panel-body">
+                            @if($errors->any())
+                            <div class="alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $message)
+                                    <li>{{$message}}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                        </div>
                         <form action="{{ route('new_post')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <label for='title'>タイトルを入力する</label>
@@ -21,6 +32,11 @@
                                 <option value="{{ $param['id']}}">{{ $param['category'] }}</option>
                                 @endforeach
                             </select>
+                            @auth
+                            @if(Auth::user()->role  == '1')
+                            <p><a href="{{ route('category') }}">カテゴリ追加</a></p>
+                            @endif
+                            @endauth
                             <label for='text' class='mt-2'>エピソード</label>
                                 <textarea class='form-control' name='text'></textarea>
                             <div class='row justify-content-center'>

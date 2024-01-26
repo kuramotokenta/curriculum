@@ -32,13 +32,13 @@
         </div>
     </div>
     <div class="">
-        <button type="submit" class="btn btn-secondary"><a href="{{ route('edit.post', ['id' => $alls['id']])}}">投稿を編集する</a></button>
+        <button type="submit" class="btn btn-secondary"><a href="{{ route('edit.post', ['id'=>$alls['id']])}}">投稿を編集する</a></button>
     </div>
     <div class="">
-        <button type="submit" class="btn btn-secondary"><a href="{{ route('delete', ['id' => $alls['id']])}}">投稿を削除する</a></button>
+        <button type="submit" class="btn btn-secondary"><a href="{{ route('delete', ['id'=>$alls['id']])}}">投稿を削除する</a></button>
     </div>
     <div class="">
-        <button type="submit" class="btn btn-secondary"><a href="{{ route('delflg', ['id' => $alls['id']])}}">投稿を論理削除する</a></button>
+        <button type="submit" class="btn btn-secondary"><a href="{{ route('delflg', ['id'=>$alls['id']])}}">投稿を論理削除する</a></button>
     </div>
 </div>
 @endforeach

@@ -1,3 +1,4 @@
+<?php header('X-Frame-Options: DENY');?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -51,31 +52,13 @@
             <li><a href="{{ route('main')}}">ホーム</a></li>
             <li><a href="{{ route('myprofile')}}">プロフィール</a></li>
             <li><a href="{{ route('new_post')}}">作成</a></li>
+            @auth
+                @if(Auth::user()->role  == '1')
+                    <li><a href="{{ route('user.list')}}">ユーザー一覧</a></li>
+                @endif
+            @endauth
             <li><p>検索</p>
-            <form action="{{ route('main')}}" method="post" class="justify-content-around">
-                @csrf
-                <div class="form-group">
-                    <input type='date' class='form-control' name='first' id='date' value="<?php echo $first ?>"/>
-                </div>
-                <div class="form-group">
-                    <p>~</p>
-                </div>
-                <div class="form-group">
-                    <input type='date' class='form-control' name='end' id='date' value="<?php echo $end ?>"/>
-                </div>
-                <div class="form-group">
-                    <label for='type_id' class='mt-2'>カテゴリを入力する</label>
-                    <select name='type_id' class='form-control'>
-                        <option value='' hidden>カテゴリ</option>
-                        @foreach($params as $param)
-                        <option value="{{ $param['id']}}">{{ $param['category'] }}</option>
-                        @endforeach
-                    </select>
-                </div>        
-                <div class="form-group">
-                    <button type='submit' class='btn btn-primary'>検索</button>
-                </div> 
-            </form>
+            @yield('serch')
             </li>
         </ul>
     </div>

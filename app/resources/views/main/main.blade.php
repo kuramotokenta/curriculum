@@ -1,5 +1,32 @@
 @extends('view.main_layout')
 
+@section('serch')
+<form action="{{ route('main')}}" method="post" class="justify-content-around">
+    @csrf
+    <div class="form-group">
+        <input type='date' class='form-control' name='first' id='date' value="<?php echo $first ?>"/>
+    </div>
+    <div class="form-group">
+        <p>~</p>
+    </div>
+    <div class="form-group">
+        <input type='date' class='form-control' name='end' id='date' value="<?php echo $end ?>"/>
+    </div>
+    <div class="form-group">
+        <label for='type_id' class='mt-2'>カテゴリを入力する</label>
+        <select name='type_id' class='form-control'>
+    <option value='' hidden>カテゴリ</option>
+        @foreach($params as $param)
+            <option value="{{ $param['id']}}">{{ $param['category'] }}</option>
+        @endforeach
+        </select>
+    </div>        
+    <div class="form-group">
+        <button type='submit' class='btn btn-primary'>検索</button>
+    </div> 
+</form>
+@endsection
+
 @section('content')
     @foreach($all as $alls)
     <div class="">

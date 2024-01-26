@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ['type_id','category'];
+    protected $fillable = ['category'];
+
+    public function post() {
+        return $this->hasOne('App\Post','type_id');
+    }
 
     public $timestamps = false;
 }

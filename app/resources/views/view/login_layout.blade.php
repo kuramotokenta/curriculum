@@ -1,3 +1,4 @@
+<?php header('X-Frame-Options: DENY');?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <!-- <head>
