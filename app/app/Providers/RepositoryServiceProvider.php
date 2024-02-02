@@ -7,8 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class RepositoryServiceProvider extends ServiceProvider
 {
     private $models = [
-        'User',
-        'UserToken'
+        'User'
     ];
 
     /**
@@ -24,14 +23,12 @@ class RepositoryServiceProvider extends ServiceProvider
         //         "App\Repositories\Eloquents\{$model}Repository"
         //     );
         // }
-        $this->app->bind(
-            "App\Repositories\Interfaces\UserRepositoryInterface",
-            "App\Repositories\Eloquents\UserRepository"
-        );
-        $this->app->bind(
-            "App\Repositories\Eloquents\UserTokenRepositoryInterface",
-            "App\Repositories\Eloquents\UserTokenRepository"
-        );
+        foreach($this->models as $model){
+            $this->app->bind(
+                "App\Repositories\Interfaces\\{$model}RepositoryInterface",
+                "App\Repositories\Eloquents\\{$model}Repository"
+            );
+        }
     }
 
     /**

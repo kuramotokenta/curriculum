@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\CustomPasswordReset;
+
 
 class User extends Authenticatable
 {
@@ -16,8 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','images','profile','del_flg','role'
-    ];
+        'name', 'email', 'password','images','profile','del_flg','role'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,7 +39,7 @@ class User extends Authenticatable
     ];
 
     public function post() {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Post', 'user_id');
     }
 
     public function like() {
@@ -76,5 +77,14 @@ class User extends Authenticatable
         $this->likes()->detach($postId);
       } else {
       }
+    }
+
+    public function like_post() {
+      return $this->hasManyThrough('App\Post','App\Like','user_id','id',null,'post_id');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomPasswordReset($token));
     }
 }

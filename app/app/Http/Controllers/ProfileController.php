@@ -23,7 +23,7 @@ class ProfileController extends Controller
     {
         $profile = Auth::user();
 
-        $all = Post::where('user_id', Auth::user()->id)->orderby('created_at', 'DESC')->paginate(10);
+        $all = Post::where('user_id', Auth::user()->id)->orderby('created_at', 'DESC')->get();
 
         return view('main/my_profile',[
             'profile' => $profile,

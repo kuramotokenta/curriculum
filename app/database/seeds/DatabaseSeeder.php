@@ -11,8 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categorys')->insert([
-            'category' => '旅行',
-        ]);
+        \App\User::factory(10)->create();
     }
 }

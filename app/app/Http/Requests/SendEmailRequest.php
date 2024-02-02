@@ -31,16 +31,9 @@ class SendEmailRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => ':attributeを入力してください',
+            'email.required' => 'メールアドレスを入力してください',
             'email.email' => '正しいメールアドレスの形式で入力してください',
-            'email.exists' => '登録している:attributeを入力してください'
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-            'email' => 'メールアドレス',
+            'email.exists' => '登録しているメールアドレスを入力してください'
         ];
     }
 }

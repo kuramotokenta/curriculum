@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Post;
 use App\Category;
+use App\Comment;
+use App\Like;
+use App\Prefecture;
+use DB;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -22,10 +26,12 @@ class ResourceController extends Controller
     public function index(Request $request)
     {
         $params = Category::get();
+        $prefectures = Prefecture::orderBy('id','asc')->get();
 
         $first = $request->input('first');
         $end = $request->input('end');
-        $category = $request->input('type_id');
+        $prefecture = $request->input('prefecture_id');
+        $category = $request->input('category_id');
 
         $post = Post::where('del_flg', 0)->orderby('created_at', 'DESC');
 
@@ -33,14 +39,19 @@ class ResourceController extends Controller
             $post->whereBetween('created_at',[$first,$end]);
         }
 
+        if (isset($prefecture)) {
+            $post->where('prefecture_id',[$prefecture]);
+        }        
+
         if (isset($category)) {
-            $post->where('type_id',[$category]);
+            $post->where('category_id',[$category]);
         }
 
-        $all = $post->paginate(10);
-
+        $all = $post->paginate(5);
+        
         return view('main/main',[
             'params' => $params,
+            'prefectures' => $prefectures,
             'all' => $all,
             'first' => $first,
             'end' => $end,
@@ -57,10 +68,12 @@ class ResourceController extends Controller
         $user = Auth::user()->get();
 
         $params = Category::get();
+        $prefectures = Prefecture::orderby('id','asc')->get();
 
         return view('main/new_post',[
             'user' => $user,
             'params' => $params,
+            'prefectures' => $prefectures,
         ]);
     }
 
@@ -80,7 +93,8 @@ class ResourceController extends Controller
         $post->title = $request->title;
         $img_path = $request->file('post_img')->store('public\image');
         $post->post_img = basename($img_path);
-        $post->type_id = $request->type_id;
+        $post->prefecture_id = $request->prefecture_id;
+        $post->category_id = $request->category_id;
         $post->text = $request->text;
 
         $post->save();
@@ -108,11 +122,13 @@ class ResourceController extends Controller
     public function edit($id)
     {
         $params = Category::get();
+        $prefectures = Prefecture::orderby('id','asc')->get();
 
         $result = Post::find($id);
 
         return view('main/post_detail',[
             'params' => $params,
+            'prefectures' => $prefectures,
             'result' => $result,
         ]);
     }
@@ -131,7 +147,8 @@ class ResourceController extends Controller
         $record->title = $request->title;
         $img_path = $request->file('post_img')->store('public\image');
         $record->post_img = basename($img_path);
-        $record->type_id = $request->type_id;
+        $record->prefecture_id = $request->prefecture_id;
+        $record->category_id = $request->category_id;
         $record->text = $request->text;
 
         $record->save();
@@ -148,11 +165,20 @@ class ResourceController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        $postid = Comment::find($post->id);
+        $postlike = Like::find($post->id);
 
-        $post->comments()->delete();
+        if(!empty($postid)){
+            $postid->delete();
+        };
+
+        if(!empty($postlike)){
+            $post->delete();
+        };
+        
         $post->delete();
 
-        return redirect()->route('myprofile');
+        return back();
     }
 
     public function delFlg($id)
@@ -165,7 +191,7 @@ class ResourceController extends Controller
 
         $post->save();
 
-        return redirect()->route('myprofile');
+        return back();
     }
 
     public function userindex ()
@@ -180,7 +206,10 @@ class ResourceController extends Controller
     public function userdestroy($id)
     {
         $user = User::find($id);
+        $post = Post::where('user_id',$id);
+
         $user->delete();
+        $post->delete();
 
         return redirect()->route('user.list');
     }
@@ -210,5 +239,14 @@ class ResourceController extends Controller
         $category->save();
 
         return redirect()->route('new_post');
+    }
+
+    public function postComment($id)
+    {
+        $comment = Post::find($id)->comment;
+
+        return view('main/comment_list',[
+            'comment' => $comment,
+        ]);
     }
 }

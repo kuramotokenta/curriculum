@@ -1,7 +1,7 @@
 @extends('view.login_layout')
 
 @section('content')
-  <div class="container">
+  <div class="">
     <div class="row justify-content-center">
       <div class="col col-md-offset-3 col-md-6">
         <nav class="card mt-5">
@@ -9,9 +9,10 @@
           <div class="card-body">
             <div class="text-center">
                 <p>パスワードリセットメールを送信しました！</p>
+                <p>送信されたメールにあるURLよりパスワードを変更してください。</p>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary"><a href="{{ route('login') }}">ログイン画面へ</a></button>
+                <a href="{{ route('login') }}" class="btn btn-secondary">ログイン画面へ</a>
             </div>
             </form>
           </div>

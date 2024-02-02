@@ -2,10 +2,12 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+
+use App\Http\Requests\SendEmailRequest;
 
 use App\Http\Requests\CreateData;
 use App\Http\Requests\CreateCategory;
@@ -22,26 +24,7 @@ use App\Http\Requests\CreateProfile;
 |
 */
 Auth::routes();
-
 Route::group(['middleware' => 'auth'], function(){
-
-    Route::prefix('password_reset')->name('password_reset.')->group(function () {
-         Route::prefix('email')->name('email.')->group(function () {
-             // パスワードリセットメール送信フォームページ
-             Route::get('/', [PasswordController::class, 'emailFormResetPassword'])->name('form');
-             // メール送信処理
-             Route::post('/', [PasswordController::class, 'sendEmailResetPassword'])->name('send');
-             // メール送信完了ページ
-             Route::get('/send_complete', [PasswordController::class, 'sendComplete'])->name('send_comp');
-         });
-         // パスワード再設定ページ
-         Route::get('/edit', [PasswordController::class, 'edit'])->name('pass_conf');
-         // パスワード更新処理
-         Route::post('/update', [PasswordController::class, 'update'])->name('update');
-         // パスワード更新終了ページ
-         Route::get('/edited', [PasswordController::class, 'edited'])->name('pass_comp');
-     });
-
     Route::get('/', [ResourceController::class, 'index'])->name('main');
     Route::post('/',[ResourceController::class, 'index']);
     // 新規登録
@@ -61,8 +44,10 @@ Route::group(['middleware' => 'auth'], function(){
     // プロフィール編集
     Route::get('/profile/detail', [ProfileController::class, 'profileDetailForm'])->name('profile.detail');
     Route::post('/profile/detail', [ProfileController::class, 'profileDetail']);
-    
 
+   //  コメント確認
+    Route::get('/profile/{id}', [ResourceController::class, 'postComment'])->name('post.comment');
+    
     // 投稿編集
     Route::get('/edit_post/{id}', [ResourceController::class, 'edit'])->name('edit.post');
     Route::post('/edit_post/{id}', [ResourceController::class, 'update']);

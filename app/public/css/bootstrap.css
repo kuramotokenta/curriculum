@@ -198,13 +198,13 @@ figure {
   margin: 0 0 1rem;
 }
 
-img {
+/* img {
   vertical-align: middle;
   border-style: none;
   width: 100%;
   padding-top: 15px;
   padding-bottom: 15px;
-}
+} */
 
 svg {
   overflow: hidden;
@@ -10290,12 +10290,12 @@ a.text-dark:hover, a.text-dark:focus {
 
 .sidebar {
   width: 20%;
-  background-color: #ADFF2F;
   padding: 1rem;
 }
 
 .main-content {
   flex-grow: 1;
+  width: 80%;
 }
 
 .post_box {
@@ -10314,5 +10314,11 @@ a.text-dark:hover, a.text-dark:focus {
 
 .post_button {
   text-align: right;
+}
+
+.header {
+  position: fixed;
+  background-color: #ADFF2F;
+  width: 100%;
 }
 /*# sourceMappingURL=bootstrap.css.map */

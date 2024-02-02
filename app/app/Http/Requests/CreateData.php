@@ -26,7 +26,7 @@ class CreateData extends FormRequest
         return [
             'title' => 'required',
             'post_img' => 'required',
-            'type_id' => 'required',
+            'category_id' => 'required',
             'text' => 'required|max:100'
         ];
     }

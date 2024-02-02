@@ -149,7 +149,7 @@ return [
     'attributes' => [
         'title' => 'タイトル',
         'post_img' => '画像',
-        'type_id' => 'カテゴリー',
+        'category_id' => 'カテゴリー',
         'text' => 'エピソード',
         'name' => 'ニックネーム',
         'category' => 'カテゴリー',

@@ -17,6 +17,6 @@ class LikeController extends Controller
     public function destroy($postId)
     {
         Auth::user()->unlike($postId);
-        return 'ok!'; //レスポンス内容
+        return 'おっけー!'; //レスポンス内容
     }
 }

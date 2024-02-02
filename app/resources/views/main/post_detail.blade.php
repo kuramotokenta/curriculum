@@ -24,8 +24,15 @@
                     <input type='text' class='form-control' name='title' value='<?php echo $result['title'] ?>'/>
                 <label for='post_img' class='mt-2'>画像を変更する</label>
                     <input type='file' class='form-control' name='post_img' id='file' value='<?php echo $result['post_img'] ?>'/>
-                <label for='type_id' class='mt-2'>カテゴリを変更する</label>
-                <select name='type_id' class='form-control'>
+                <label for='prefecture_id'>都道府県を変更する</label>
+                <select name='prefecture_id' class='form-control'>
+                    <option value='<?php echo $result['name'] ?>' hidden>都道府県</option>
+                    @foreach($prefectures as $prefecture)
+                    <option value="{{ $prefecture['id']}}">{{ $prefecture['name'] }}</option>
+                    @endforeach
+                </select>
+                <label for='category_id' class='mt-2'>カテゴリを変更する</label>
+                <select name='category_id' class='form-control'>
                     <option value='<?php echo $result['category'] ?>' hidden>カテゴリ</option>
                     @foreach($params as $param)
                     <option value="{{ $param['id']}}">{{ $param['category'] }}</option>
